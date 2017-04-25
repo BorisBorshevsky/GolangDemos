@@ -2,15 +2,6 @@ package main
 
 import "testing"
 
-//func main() {
-//	n := 30
-//
-//	common.TimeTrack(atomicRun, n, "atomic")
-//	common.TimeTrack(mutexRun, n, "mutex")
-//	common.TimeTrack(simpleRun, n, "simple")
-//
-//}
-//
 
 func benchmarkAtomic(c int, b *testing.B) {
 	for n := 0; n < b.N; n++ {

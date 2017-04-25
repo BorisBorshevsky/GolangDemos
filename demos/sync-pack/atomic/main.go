@@ -42,7 +42,7 @@ func simpleRun(n int) int64 {
 func mutexRun(n int) int64 {
 	var a int64 = 0
 
-	m := sync.Mutex{}
+	m := &sync.Mutex{}
 	wg := sync.WaitGroup{}
 	wg.Add(n)
 
