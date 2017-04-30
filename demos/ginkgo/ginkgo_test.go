@@ -3,7 +3,8 @@ package ginkgo
 import (
 	"testing"
 
-	log "github.com/k0kubun/pp"
+	"log"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -44,8 +45,10 @@ var _ = Describe("Describe 1", func() {
 
 		It("expect #1.1.1", func() {
 			log.Println("test #1.1.1")
-			By("test 1"); Expect(1).To(Equal(1))
-			By("test 2"); Expect(1).To(Equal(2))
+			By("test 1")
+			Expect(1).To(Equal(1))
+			By("test 2")
+			Expect(1).To(Equal(2))
 		})
 
 		It("expect #1.1.2", func() {
