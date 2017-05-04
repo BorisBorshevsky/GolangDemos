@@ -18,6 +18,9 @@ func Track(n int) {
 	common.TimeTrack(mutexRun, n, "mutex")
 
 	common.TimeTrack(atomicRun, n, "atomic")
+
+	common.TimeTrack(semaphoreRun, n, "sem")
+
 }
 
 func simpleRun(n int) int64 {
@@ -71,6 +74,27 @@ func atomicRun(n int) int64 {
 		go func() {
 			for j := 0; j < n; j++ {
 				atomic.AddInt64(&a, 1)
+			}
+			wg.Done()
+		}()
+	}
+
+	wg.Wait()
+	return a
+}
+
+func semaphoreRun(n int) int64 {
+	var a int64 = 0
+	var sem = make(chan int, 1)
+
+	wg := sync.WaitGroup{}
+	wg.Add(n)
+	for i := 0; i < n; i++ {
+		go func() {
+			for j := 0; j < n; j++ {
+				sem <- 1
+				a += 1
+				<-sem
 			}
 			wg.Done()
 		}()

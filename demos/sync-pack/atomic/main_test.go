@@ -2,7 +2,6 @@ package main
 
 import "testing"
 
-
 func benchmarkAtomic(c int, b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		atomicRun(c)
@@ -12,6 +11,12 @@ func benchmarkAtomic(c int, b *testing.B) {
 func benchmarkMutex(c int, b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		mutexRun(c)
+	}
+}
+
+func benchmarkSemaphore(c int, b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		semaphoreRun(c)
 	}
 }
 
@@ -46,4 +51,21 @@ func BenchmarkAtomic1000(b *testing.B) {
 
 func BenchmarkAtomic3000(b *testing.B) {
 	benchmarkAtomic(3000, b)
+}
+
+func BenchmarkSem200(b *testing.B) {
+	benchmarkSemaphore(200, b)
+
+}
+
+func BenchmarkSem500(b *testing.B) {
+	benchmarkSemaphore(500, b)
+}
+
+func BenchmarkSem1000(b *testing.B) {
+	benchmarkSemaphore(1000, b)
+}
+
+func BenchmarkSem3000(b *testing.B) {
+	benchmarkSemaphore(3000, b)
 }
