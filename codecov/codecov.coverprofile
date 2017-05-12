@@ -1,9 +1,0 @@
-mode: atomic
-github.com/gettaxi/smallDemos/codecov/game.go:19.34,24.2 1 0
-github.com/gettaxi/smallDemos/codecov/game.go:26.33,27.40 1 2
-github.com/gettaxi/smallDemos/codecov/game.go:31.2,31.23 1 1
-github.com/gettaxi/smallDemos/codecov/game.go:27.40,29.3 1 1
-github.com/gettaxi/smallDemos/codecov/game.go:34.29,35.19 1 2
-github.com/gettaxi/smallDemos/codecov/game.go:41.2,41.10 1 2
-github.com/gettaxi/smallDemos/codecov/game.go:35.19,37.3 1 1
-github.com/gettaxi/smallDemos/codecov/game.go:37.3,40.3 1 1
