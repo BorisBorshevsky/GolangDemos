@@ -12,7 +12,7 @@ func TestCov(t *testing.T) {
 	RunSpecs(t, "Cov suite")
 }
 
-var _ = Describe("Game", func() {
+var _ = Describe("Match", func() {
 
 	var myBoard *board
 

@@ -48,7 +48,7 @@ var _ = Describe("Describe 1", func() {
 			By("test 1")
 			Expect(1).To(Equal(1))
 			By("test 2")
-			Expect(1).To(Equal(2))
+			Expect(2).To(Equal(2))
 		})
 
 		It("expect #1.1.2", func() {

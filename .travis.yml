@@ -10,9 +10,11 @@ before_install:
 install:
   - go get github.com/Masterminds/glide
   - glide install
+  - go get -v github.com/onsi/ginkgo/ginkgo
+  - go get -v github.com/onsi/gomega
 
 script:
-  - go test -race -coverprofile=coverage.txt -covermode=atomic
+  - ./go.test.sh
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - include_cov=coverage.txt bash <(curl -s https://codecov.io/bash)

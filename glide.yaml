@@ -1,4 +1,4 @@
-package: github.com/gettaxi/smallDemos
+package: github.com/BorisBorshevsky/GolangDemos
 import:
 - package: github.com/k0kubun/pp
 testImport:
