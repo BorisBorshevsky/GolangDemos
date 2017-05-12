@@ -2,11 +2,12 @@
 
 set -e
 echo "" > coverage.txt
+ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --cover --trace --race --compilers=2
 
 for d in $(go list ./... | grep -v vendor); do
-    ginkgo test --randomizeAllSpecs --failOnPending --trace --race --coverprofile=profile.out -covermode=atomic $d
-    if [ -f profile.out ]; then
-        cat profile.out >> coverage.txt
-        rm profile.out
+    VAR=$( basename $d )
+    if [ -f $GOPATH/src/$d/$VAR.coverprofile ]; then
+        cat $GOPATH/src/$d/$VAR.coverprofile >> coverage.txt
+        rm $GOPATH/src/$d/$VAR.coverprofile
     fi
 done
