@@ -1,5 +1,0 @@
-package: github.com/gettaxi/smallDemos/demos
-import: []
-testImport:
-- package: github.com/onsi/ginkgo
-- package: github.com/onsi/gomega

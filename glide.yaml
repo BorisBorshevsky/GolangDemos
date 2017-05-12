@@ -1,0 +1,6 @@
+package: github.com/gettaxi/smallDemos
+import:
+- package: github.com/k0kubun/pp
+testImport:
+- package: github.com/onsi/ginkgo
+- package: github.com/onsi/gomega
