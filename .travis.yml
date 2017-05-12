@@ -3,6 +3,7 @@ language: go
 go:
   - 1.8.x
   - tip
+  - stable
 
 before_install:
   - export PATH=$PATH:$HOME/gopath/bin
@@ -10,6 +11,8 @@ before_install:
 install:
   - go get github.com/Masterminds/glide
   - glide install
+  - go get -v github.com/onsi/ginkgo/ginkgo
+  - go get -v github.com/onsi/gomega
 
 script:
   - ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --cover --trace --race --progress --coverprofile=coverage.txt --covermode=atomic
