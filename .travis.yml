@@ -14,7 +14,7 @@ install:
   - go get -v github.com/onsi/gomega
 
 script:
-  - ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --trace --race --progress --coverprofile=coverage.txt --covermode=atomic
+  - ./go.test.sh
 
 after_success:
   - include_cov=coverage.txt bash <(curl -s https://codecov.io/bash)
