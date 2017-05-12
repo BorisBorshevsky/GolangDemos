@@ -3,7 +3,7 @@ package main
 import (
 	"sync/atomic"
 
-	"github.com/borisborshevsky/smallDemos/common"
+	"github.com/BorisBorshevsky/GolangDemos/common"
 
 	"sync"
 )
