@@ -3,9 +3,9 @@ package main
 import (
 	"sync/atomic"
 
-	"sync"
+	"github.com/borisborshevsky/smallDemos/common"
 
-	"github.com/gettaxi/smallDemos/common"
+	"sync"
 )
 
 func main() {
