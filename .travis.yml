@@ -12,7 +12,7 @@ install:
   - glide install
 
 script:
-  - go test -race -coverprofile=coverage.txt -covermode=atomic
+  - ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --cover --trace --race --progress --coverprofile=coverage.txt --covermode=atomic
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
