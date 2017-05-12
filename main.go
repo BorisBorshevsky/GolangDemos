@@ -7,15 +7,6 @@ type Adder struct {
 func (a *Adder) Add(i int) {
 	if i == 7 {
 		panic("Boom")
-		panic("Boom")
-		panic("Boom")
-		panic("Boom")
-		panic("Boom")
-		panic("Boom")
-		panic("Boom")
-		panic("Boom")
-		panic("Boom")
-		panic("Boom")
 	}
 	a.sum += i
 }
