@@ -1,9 +1,6 @@
 package cache
 
-import (
-	"github.com/BorisBorshevsky/GolangDemos/catapult"
-	"github.com/k0kubun/pp"
-)
+import "github.com/BorisBorshevsky/GolangDemos/catapult"
 
 const fallbackKeyPrefix = "$fb$"
 
@@ -44,16 +41,12 @@ func (c *falbackCacheMaker) Register(ctx *catapult.Ctx) {
 				c.Set(key, string(response.Bytes()))
 			}
 		} else {
-			pp.Println("HERE")
 			cacheResp, err := c.Get(key)
 			if err != nil {
-				pp.Println("FB CAHCE??")
 				if err != NotExist {
-					pp.Println("FB CACHE ERROR", err)
 					return
 				}
 			} else {
-				pp.Println("WE HERE")
 				response.Write(cacheResp)
 				response.Context.SetError(nil)
 			}

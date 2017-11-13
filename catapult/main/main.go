@@ -13,12 +13,6 @@ func main() {
 
 		start := time.Now()
 		val, err := locationSvc.Alive()
-		//if err != nil {
-		//	pp.Println(err.Error())
-		//} else {
-		//	pp.Println(val.Commit)
-		//}
-
 		if err == nil {
 			pp.Println("stop1", time.Since(start).Nanoseconds()/1e6, val.Commit)
 		} else {

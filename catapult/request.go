@@ -11,6 +11,8 @@ import (
 
 	"bytes"
 
+	"encoding/json"
+
 	"github.com/k0kubun/pp"
 	"golang.org/x/net/context"
 	"gopkg.in/h2non/gentleman.v1/utils"
@@ -59,6 +61,7 @@ func (r *Request) Send() (*Response, error) {
 	}
 
 	if err := r.Context.encodeReqFunc(r.rawRequest, r.Context.requestPayload); err != nil {
+		//todo: maybe return err here
 		r.Context.SetError(err)
 		r.Context.skipDispatch = true
 	}
@@ -76,8 +79,7 @@ func (r *Request) Send() (*Response, error) {
 
 		r.Context.Response = resp
 	} else {
-		rawResponse, err := r.Context.client.Do(r.rawRequest)
-
+		rawResponse, err := r.Context.Client.rawClient.Do(r.rawRequest)
 		if e, ok := err.(net.Error); ok && e.Timeout() {
 			r.Context.err = TimeoutError
 		} else if err != nil {
@@ -97,7 +99,6 @@ func (r *Request) Send() (*Response, error) {
 		}
 
 		r.Context.Response = resp
-
 	}
 
 	for _, fn := range r.Context.justAfter {
@@ -113,17 +114,13 @@ func (r *Request) Send() (*Response, error) {
 	return r.Context.Response, r.Context.err
 }
 
-//func (r *Request) buildResponse(Context *Ctx, rawResponse *http.Response) *Response {
-//	r
-//}
-
 func (r *Request) Raw() *http.Request {
 	return r.rawRequest
 }
 
-func (r *Request) Method() string {
-	return r.rawRequest.Method
-}
+//func (r *Request) Method() string {
+//	return r.rawRequest.Method
+//}
 
 func (r *Request) Timeout(dur time.Duration) {
 	r.timeout = dur
@@ -137,70 +134,14 @@ func (r *Request) SetDecoder(fn func(response *Response) (interface{}, error)) {
 	r.Context.SetDecoder(fn)
 }
 
-//func (r *Request) SetHost(host string) *Request {
-//	r.Context.SetHost(host)
-//	return r
-//}
-//
-//func (r *Request) SetPath(path string) *Request {
-//	r.Context.SetPath(path)
-//	return r
-//}
-//
-//func (r *Request) SetParams(params url.Values) *Request {
-//	r.Context.params = params
-//	return r
-//}
-//
-//func (r *Request) AddParam(key, val string) *Request {
-//	r.Context.AddParam(key, val)
-//	return r
-//}
-//
-//func (r *Request) SetParam(key, val string) *Request {
-//	r.Context.SetParam(key, val)
-//	return r
-//}
-//
-//func (r *Request) DelParam(key string) *Request {
-//	r.Context.DelParam(key)
-//	return r
-//}
-//
+func (r *Request) SetDecoder2(x interface{}) {
+	r.Context.SetDecoder(func(response *Response) (interface{}, error) {
+		err := json.NewDecoder(response).Decode(x)
+		return x, err
+	})
+}
+
 func (r *Request) Wrap(feature ClientFeature) *Request {
 	r.Context.middlwares = append(r.Context.middlwares, feature)
 	return r
 }
-
-//
-//func (r *Request) method() string {
-//	if r.Context.method != "" {
-//		return r.Context.method
-//	}
-//
-//	if r.Context.requestPayload == nil {
-//		return http.MethodGet
-//	}
-//
-//	return http.MethodPost
-//}
-//
-//func (r *Request) Get() (*Response, error) {
-//	r.Method(http.MethodGet)
-//	return r.Send()
-//}
-//
-//func (r *Request) Post() (*Response, error) {
-//	r.Method(http.MethodPost)
-//	return r.Send()
-//}
-//
-//func (r *Request) Put() (*Response, error) {
-//	r.Method(http.MethodPut)
-//	return r.Send()
-//}
-//
-//func (r *Request) Delete() (*Response, error) {
-//	r.Method(http.MethodDelete)
-//	return r.Send()
-//}

@@ -32,11 +32,6 @@ func (r *Response) Status() int {
 	return r.statusCode
 }
 
-//func (r *Response) Buffer() io.ReadWriter {
-//	r.populateResponseByteBuffer()
-//	return r.buffer
-//}
-
 func (r *Response) Write(p []byte) (n int, err error) {
 	if r.started {
 		return 0, AlreadyWrittenError
@@ -81,8 +76,6 @@ func (r *Response) populateResponseByteBuffer() {
 
 	defer r.Body.Close()
 
-	//pp.Println("ContentLength", r.ContentLength)
-
 	// Is there any content?
 	if r.ContentLength == 0 {
 		return
@@ -94,7 +87,6 @@ func (r *Response) populateResponseByteBuffer() {
 	}
 
 	_, err := io.Copy(r.buffer, r.Body)
-	//pp.Println("WHAT", r.buffer.String())
 	if err != nil && err != io.EOF {
 		r.Context.err = err
 	}

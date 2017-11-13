@@ -3,6 +3,8 @@ package circuitBreaker
 import (
 	"sync"
 
+	"time"
+
 	"github.com/BorisBorshevsky/GolangDemos/catapult"
 	"github.com/pkg/errors"
 	"github.com/rubyist/circuitbreaker"
@@ -30,7 +32,7 @@ type cbAddon struct {
 
 var DefaultOptions = &circuit.Options{
 	ShouldTrip: circuit.ConsecutiveTripFunc(3),
-	WindowTime: circuit.DefaultWindowTime,
+	WindowTime: time.Second * 10,
 }
 
 func Add(options ...*circuit.Options) *cbAddon {
@@ -76,7 +78,7 @@ func (c *cbAddon) Register(ctx *catapult.Ctx) {
 	ctx.AddAfter(func(response *catapult.Response) {
 		cb := cbStore.getOrCreate(ctx.Data[cbCtxKey].(string), c.options)
 
-		if response.Valid() {
+		if response.Valid() { //todo when are we valid??
 			cb.Success()
 		} else {
 			cb.Fail()
@@ -90,6 +92,6 @@ func (c *cbAddon) extractKey(request *catapult.Request) string {
 	if c.key != "" {
 		return c.key
 	}
-
+	//todo per path / host
 	return request.Raw().URL.String()
 }

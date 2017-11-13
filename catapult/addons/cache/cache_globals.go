@@ -19,6 +19,6 @@ var fbCtxKey = ctxDataKey(3)
 var fbCtxValue = ctxDataKey(4)
 
 type Provider interface {
-	Set(k, v string) error
+	Set(k, v string) error //todo set byte array
 	Get(k string) ([]byte, error)
 }

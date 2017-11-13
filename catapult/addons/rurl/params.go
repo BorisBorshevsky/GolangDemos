@@ -12,6 +12,12 @@ func AddParam(key, val string) *params {
 	}
 }
 
+func AddParams(param map[string]string) *params {
+	return &params{
+		keys: param,
+	}
+}
+
 func (p *params) Register(ctx *catapult.Ctx) {
 	ctx.AddBefore(func(request *catapult.Request) {
 		params := request.Raw().URL.Query()

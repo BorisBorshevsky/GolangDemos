@@ -9,7 +9,7 @@ type Ctx struct {
 	Response *Response
 	Client   *Client
 
-	client *http.Client
+	//client *http.Client
 
 	Data map[interface{}]interface{}
 
@@ -44,72 +44,21 @@ func (c *Ctx) WasDispatchSkipped() bool {
 	return c.skipDispatch
 }
 
-//func (c *Ctx) cloneParams() (cloned url.Values) {
-//	for k, vals := range c.params {
-//		for _, v := range vals {
-//			cloned.Add(k, v)
-//		}
-//
-//	}
-//	return
-//}
-
 func (c *Ctx) SetError(err error) {
-	//if c.err == nil {
 	c.err = err
-	//}
 }
 
 func NewContext() *Ctx {
 	ctx := &Ctx{
-		before: make([]func(request *Request), 0),
-		//justBefore: make([]func(request *Request), 0),
-		after: make([]func(request *Response), 0),
-		Data:  make(map[interface{}]interface{}),
-		//justAfter:  make([]func(request *Response), 0),
-		//url: url.URL{
-		//	Scheme: "http",
-		//},
-		client:        http.DefaultClient, //todo
+		before:        make([]func(request *Request), 0),
+		after:         make([]func(request *Response), 0),
+		Data:          make(map[interface{}]interface{}),
 		decodeResFunc: GenericDecoder,
 		encodeReqFunc: GenericEncoder,
 	}
 
-	ctx.client.Transport = DefaultTransport
 	return ctx
-
 }
-
-//
-//func (c *Ctx) SetHost(host string) *Ctx {
-//	c.url.Host = host
-//	return c
-//}
-//
-//func (c *Ctx) SetPath(path string) *Ctx {
-//	c.url.Path = path
-//	return c
-//}
-//
-//func (c *Ctx) SetParams(params url.Values) *Ctx {
-//	c.params = params
-//	return c
-//}
-//
-//func (c *Ctx) AddParam(key, val string) *Ctx {
-//	c.params.Add(key, val)
-//	return c
-//}
-//
-//func (c *Ctx) SetParam(key, val string) *Ctx {
-//	c.params.Set(key, val)
-//	return c
-//}
-//
-//func (c *Ctx) DelParam(key string) *Ctx {
-//	c.params.Del(key)
-//	return c
-//}
 
 func (c *Ctx) Clone() *Ctx {
 	return &Ctx{
@@ -121,7 +70,6 @@ func (c *Ctx) Clone() *Ctx {
 		middlwares:    append([]ClientFeature{}, c.middlwares...),
 		encodeReqFunc: c.encodeReqFunc,
 		decodeResFunc: c.decodeResFunc,
-		client:        c.client,
 	}
 }
 
@@ -136,10 +84,6 @@ func (c *Ctx) AddBefore(fn func(request *Request)) {
 func (c *Ctx) AddAfter(fn func(*Response)) {
 	c.after = append([]func(*Response){fn}, c.after...)
 }
-
-//func (c *Ctx) AddJustAfter(fn func(*Response)) {
-//c.justAfter = append(c.justAfter, fn)
-//}
 
 func (c *Ctx) AddJustBefore(fn func(request *Request)) {
 	c.justBefore = append(c.justBefore, fn)

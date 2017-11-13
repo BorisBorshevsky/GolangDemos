@@ -51,14 +51,6 @@ func NewClient() *Client {
 	return client
 }
 
-//func (c *Client) SetHost(host string) {
-//	c.Context.SetHost(host)
-//}
-//
-//func (c *Client) SetTimeout(dur time.Duration) {
-//	c.RequestTimeout = dur
-//}
-
 func (c *Client) NewRequest() *Request {
 	ctx := c.context.Clone()
 
@@ -67,14 +59,11 @@ func (c *Client) NewRequest() *Request {
 		Context: ctx,
 	}
 
+	req.Context.Client = c
+
 	return req
 }
 
 func (c *Client) Wrap(feature ClientFeature) {
 	c.context.middlwares = append(c.context.middlwares, feature)
 }
-
-//
-//func (c *Client) SetDecodeFunc(fn func(response *Response) (interface{}, error)) {
-//	c.Context.SetDecoder(fn)
-//}
