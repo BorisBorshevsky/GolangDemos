@@ -12,7 +12,6 @@ func (self *Banner) getString() string {
 	return "*" + self.str + "*"
 }
 
-// 構造体の埋込による継承
 type EmbeddedDecorateBanner struct {
 	*Banner
 }
