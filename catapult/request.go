@@ -13,6 +13,8 @@ import (
 
 	"encoding/json"
 
+	"io"
+
 	"github.com/k0kubun/pp"
 	"golang.org/x/net/context"
 	"gopkg.in/h2non/gentleman.v1/utils"
@@ -37,7 +39,7 @@ func (r *Request) populateRawRequest() (*http.Request, func()) {
 		ProtoMinor: 1,
 		Proto:      "HTTP/1.1",
 		Header:     make(http.Header),
-		Body:       utils.NopCloser(),
+		Body:       NopCloser(),
 	}
 
 	return req.WithContext(timeoutCtx), cancel
@@ -144,4 +146,14 @@ func (r *Request) SetDecoder2(x interface{}) {
 func (r *Request) Wrap(feature ClientFeature) *Request {
 	r.Context.middlwares = append(r.Context.middlwares, feature)
 	return r
+}
+
+type nopCloser struct {
+	io.Reader
+}
+
+func (nopCloser) Close() error { return nil }
+
+func NopCloser() io.ReadCloser {
+	return nopCloser{bytes.NewBuffer([]byte{})}
 }
