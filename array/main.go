@@ -16,6 +16,4 @@ func main() {
 
 	pp.Println("A", cap(a), len(a))
 	pp.Println("B", cap(b), len(b))
-
-
 }

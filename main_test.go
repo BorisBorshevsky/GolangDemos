@@ -24,4 +24,11 @@ var _ = Describe("my test", func() {
 		Expect(adder.Sum()).To(BeEquivalentTo(5))
 	})
 
+	It("adds 5", func() {
+		actual := func() {
+			adder.Add(7)
+		}
+		Expect(actual).To(Panic())
+	})
+
 })

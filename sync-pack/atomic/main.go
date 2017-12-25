@@ -13,7 +13,7 @@ func main() {
 }
 
 func Track(n int) {
-	common.TimeTrack(simpleRun, n, "simple")
+	//common.TimeTrack(simpleRun, n, "simple")
 
 	common.TimeTrack(mutexRun, n, "mutex")
 

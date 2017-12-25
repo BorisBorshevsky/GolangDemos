@@ -69,3 +69,7 @@ func BenchmarkSem1000(b *testing.B) {
 func BenchmarkSem3000(b *testing.B) {
 	benchmarkSemaphore(3000, b)
 }
+
+func TestTrack(t *testing.T) {
+	Track(100)
+}
